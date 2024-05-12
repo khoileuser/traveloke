@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Traveloke | Plan your trip</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+</head>
+
+<div class="container col-8 alert alert-dismissible alert-container fade show position-fixed fixed-top">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <span class="alert-msg"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<body class="h-100">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+            <a href="/" class="logo d-flex align-items-center me-auto">
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1 class="sitename">Traveloke</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="/" class="">Home</a></li>
+                </ul>
+            </nav>
+
+            <a class="btn-getstarted" href="/form">Get Started</a>
+
+        </div>
+    </header>
+
+    <main class="h-100">
+        <section class="h-100 d-flex align-items-center justify-content-center">
+            <div class="container d-flex flex-column align-items-center justify-content-center form-container">
+
+                <div>
+                    <div class="breadcrumb">
+                        <a class="breadcrumbs-item is-active">Budget</a>
+                        <a class="breadcrumbs-item">Travel Style</a>
+                        <a class="breadcrumbs-item">Accommodation Standard</a>
+                        <a class="breadcrumbs-item">Length of Stay</a>
+                        <a class="breadcrumbs-item">Country</a>
+                    </div>
+                </div>
+
+                <form class="form_info mt-5" method="post" action="/form">
+                    <div class="page active p-4 rounded-3 shadow-sm">
+                        <div class="input-field">
+                            <p>What is your budget? ($)</p>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control input-box" id="budget" name="budget"
+                                    placeholder="1000" required>
+                                <label for="budget">Budget</label>
+                            </div>
+                        </div>
+
+                        <div class="btns d-flex justify-content-center mt-3 gap-2">
+                            <button class="next-button btn w-50" type="button">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page p-4 rounded-3 shadow-sm">
+                        <div class="input-field">
+                            <p>How are you going to travel?</p>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control input-box" id="travel_style" name="travel_style"
+                                    placeholder="natural" required>
+                                <label for="travel-style">Travel Style</label>
+                            </div>
+                        </div>
+
+                        <div class="btns d-flex justify-content-center mt-3 gap-2">
+                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
+                            <button class="next-button btn w-50" type="button">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page p-4 rounded-3 shadow-sm">
+                        <div class="input-field">
+                            <p>Define your accommodation standard:</p>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control input-box" id="accommodation_standard"
+                                    name="accommodation_standard" placeholder="high" required>
+                                <label for="accommodation-standard">Accommodation Standard</label>
+                            </div>
+                        </div>
+
+                        <div class="btns d-flex justify-content-center mt-3 gap-2">
+                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
+                            <button class="next-button btn w-50" type="button">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page p-4 rounded-3 shadow-sm">
+                        <div class="range-field">
+                            <p>How long are you planning to stay?</p>
+                            <label for="length-of-stay" class="form-label stay-days">3 days</label>
+                            <input type="range" class="form-range input-box" min="1" max="30" id="length_of_stay"
+                                name="length_of_stay" value="3"
+                                oninput="document.querySelector('.stay-days').innerHTML = this.value + ' days'">
+                        </div>
+
+                        <div class="btns d-flex justify-content-center mt-3 gap-2">
+                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
+                            <button class="next-button btn w-50" type="button">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="page p-4 rounded-3 shadow-sm">
+                        <div class="input-field">
+                            <p>What country you want to visit?</p>
+                            <div class="border rounded dropdown w-100">
+                                <input class="form-control country_input input-box" type="hidden" name="country"
+                                    value="any">
+                                <button class="btn dropdown-btn dropdown-toggle w-100 text-start country_btn"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Anywhere
+                                </button>
+                                <ul class="dropdown-menu country-dropdown">
+                                    <li>
+                                        <input class="form-control country" type="text" onkeyup="filterCountry()">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="btns d-flex justify-content-center mt-3 gap-2">
+                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
+                            <button class="next-button btn w-50" type="button">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="page p-4 rounded-3 shadow-sm">
+                        <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                            <h4>Planning your trip</h4>
+                            <p><i>Just a moment...</i></p>
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuzzysort@2.0.4/fuzzysort.min.js"></script>
+    <script src="{{ url_for('static', path='/js/scripts.js') }}"></script>
+</body>
+
+</html>
