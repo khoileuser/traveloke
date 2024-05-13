@@ -21,7 +21,7 @@ window.onload = function () {
                         return function () {
                             chooseCountry(country, countries[country])
                         }
-                    })(country);
+                    })(country)
                     a.textContent = countries[country]
                     li.appendChild(a)
                     countryDropdown.appendChild(li)
@@ -104,17 +104,17 @@ function filterCountry() {
 }
 
 function customAlert(message, type) {
-    var alertContainer = document.querySelector('.alert-container');
-    var alertMsg = document.querySelector('.alert-msg');
+    var alertContainer = document.querySelector('.alert-container')
+    var alertMsg = document.querySelector('.alert-msg')
     alertContainer.classList.add(type)
-    alertMsg.innerHTML = message;
-    alertContainer.style.display = 'block';
+    alertMsg.innerHTML = message
+    alertContainer.style.display = 'block'
 
     setTimeout(function () {
-        alertContainer.style.display = 'none';
+        alertContainer.style.display = 'none'
         alertContainer.classList.remove(type)
-        alertMsg.innerHTML = "";
-    }, 5000);
+        alertMsg.innerHTML = ""
+    }, 5000)
 }
 
 function sendPrompt(chat_id) {
@@ -124,12 +124,12 @@ function sendPrompt(chat_id) {
     var userHtml = "<br><p><img src='/static/images/avatar.png' class='img-fluid' alt='avatar' width='30px' heigh='30px'>&nbsp;<strong>You</strong></p><p>" + userInput + "</p>"
     document.getElementById('chat-messages').innerHTML += userHtml
 
-    var spinnerHtml = '<div id="spinner" class="spinner-border" style="width: 2rem; height: 2rem;" role="status"><span class="visually-hidden">Loading...</span></div>';
+    var spinnerHtml = '<div id="spinner" class="spinner-border" style="width: 2rem; height: 2rem;" role="status"><span class="visually-hidden">Loading...</span></div>'
     var responseHtml = "<br><p><img src='/static/images/avatar.png' class='img-fluid' alt='avatar' width='30px' heigh='30px'>&nbsp;<strong>Traveloke</strong></p>" + spinnerHtml
     document.getElementById('chat-messages').innerHTML += responseHtml
 
-    var chatMessages = document.getElementById('chat-messages');
-    chatMessages.lastElementChild.scrollIntoView();
+    var chatMessages = document.getElementById('chat-messages')
+    chatMessages.lastElementChild.scrollIntoView()
 
     fetch('/chat', {
         method: 'POST',
@@ -143,8 +143,8 @@ function sendPrompt(chat_id) {
             var html = converter.makeHtml(data.response)
             document.getElementById('spinner').outerHTML = html
 
-            var chatMessages = document.getElementById('chat-messages');
-            chatMessages.lastElementChild.scrollIntoView();
+            var chatMessages = document.getElementById('chat-messages')
+            chatMessages.lastElementChild.scrollIntoView()
         })
         .catch((error) => {
             console.error('Error:', error)

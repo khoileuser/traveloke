@@ -47,10 +47,12 @@
                     <div class="d-none d-md-block col"></div>
                     <div class="col col-md-9 col-lg-7 col-xl-5 h-100">
                         <div class="input-group h-100 mb-4 mt-4">
-                            <input type="text" id="user-input" class="form-control"
-                                placeholder="Type your message here...">
-                            <button id="send-button" class="btn btn-primary" type="button"
-                                onclick="sendPrompt('{{ chat_id }}')">Send</button>
+                            <form class="chat_form d-flex flex-row w-100">
+                                <input type="text" id="user-input" class="form-control"
+                                    placeholder="Type your message here...">
+                                <button id="send-button" class="btn send-button" type="submit"
+                                    style="background-color: var(--accent-color); color: var(--contrast-color);">Send</button>
+                            </form>
                         </div>
                     </div>
                     <div class="d-none d-md-block col"></div>
@@ -72,6 +74,11 @@
         html = converter.makeHtml(text)
         var responseHtml = "<p><img src={{ url_for('static', path='/images/avatar.png') }} class='img-fluid' alt='avatar' width='30px' heigh='30px'>&nbsp;<strong>Traveloke</strong></p>" + html
         document.getElementById('chat-messages').innerHTML += responseHtml
+
+        document.querySelector('.chat_form').addEventListener('submit', function (event) {
+            event.preventDefault()
+            sendPrompt('{{ chat_id }}')
+        })
     </script>
 
 </body>
