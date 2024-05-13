@@ -58,6 +58,26 @@
                         <div class="col col-md-6 col-lg-5 col-xl-4 col-xxl-3">
                             <div class="page-form p-4 rounded-3 shadow-sm">
                                 <div class="input-field">
+                                    <p>What country you want to visit?</p>
+                                    <div class="border rounded dropdown w-100">
+                                        <input class="form-control country_input" type="hidden" name="country"
+                                            value="anywhere">
+                                        <button class="btn dropdown-btn dropdown-toggle w-100 text-start" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false"
+                                            style="background-color: white;">
+                                            Anywhere
+                                        </button>
+                                        <ul class="dropdown-menu country-dropdown">
+                                            <!-- <li>
+                                                <input class="form-control country" type="text"
+                                                    onkeyup="filterCountry()">
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="input-field">
                                     <p>What is your budget? ($)</p>
                                     <div class="form-floating mb-3">
                                         <input type="number" class="form-control input-box" id="budget" name="budget"
@@ -72,24 +92,6 @@
                                     <input type="range" class="form-range" min="1" max="30" id="length_of_stay"
                                         name="length_of_stay" value="3"
                                         oninput="document.querySelector('.stay-days').innerHTML = this.value + ' days'">
-                                </div>
-
-                                <div class="input-field">
-                                    <p>What country you want to visit?</p>
-                                    <div class="border rounded dropdown w-100">
-                                        <input class="form-control country_input" type="hidden" name="country"
-                                            value="any">
-                                        <button class="btn dropdown-btn dropdown-toggle w-100 text-start country_btn"
-                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Anywhere
-                                        </button>
-                                        <ul class="dropdown-menu country-dropdown">
-                                            <li>
-                                                <input class="form-control country" type="text"
-                                                    onkeyup="filterCountry()">
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </div>
 
                                 <div class="btns d-flex justify-content-center mt-3 gap-2">

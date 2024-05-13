@@ -294,3 +294,9 @@ h6 {
     right: 0;
     z-index: 999999;
 }
+
+.dropdown-menu {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 60vh;
+}

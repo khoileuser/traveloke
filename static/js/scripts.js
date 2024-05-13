@@ -121,7 +121,7 @@ window.onload = function () {
                         return function () {
                             chooseCountry(country, countries[country])
                         }
-                    })(country)
+                    })
                     a.textContent = countries[country]
                     li.appendChild(a)
                     countryDropdown.appendChild(li)
