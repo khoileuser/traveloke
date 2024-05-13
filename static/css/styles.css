@@ -207,16 +207,15 @@ h6 {
 }
 
 .page {
-    background-color: #f9f9f9;
     display: none;
 }
 
-.page.active {
-    display: block;
+.page-form {
+    background-color: #f9f9f9;
 }
 
-.form-container {
-    margin-bottom: 10rem;
+.page.active {
+    display: flex;
 }
 
 .breadcrumb {

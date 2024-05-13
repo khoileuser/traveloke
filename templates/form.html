@@ -35,118 +35,421 @@
         </div>
     </header>
 
-    <main class="h-100">
-        <section class="h-100 d-flex align-items-center justify-content-center">
-            <div class="container d-flex flex-column align-items-center justify-content-center form-container">
+    <main class="h-100 pt-5">
+        <section class="h-100 pt-5">
+            <div class="container-fluid">
 
-                <div>
+                <div class="d-flex flex-column align-items-center justify-content-center">
                     <div class="breadcrumb">
-                        <a class="breadcrumbs-item is-active">Budget</a>
+                        <a class="breadcrumbs-item is-active">Basic</a>
                         <a class="breadcrumbs-item">Travel Style</a>
-                        <a class="breadcrumbs-item">Accommodation Standard</a>
-                        <a class="breadcrumbs-item">Length of Stay</a>
-                        <a class="breadcrumbs-item">Country</a>
+                        <a class="breadcrumbs-item">Locale</a>
+                        <a class="breadcrumbs-item">Activity</a>
+                        <a class="breadcrumbs-item">Accommodation</a>
                     </div>
                 </div>
 
-                <form class="form_info mt-5" method="post" action="/conversation">
-                    <div class="page active p-4 rounded-3 shadow-sm">
-                        <div class="input-field">
-                            <p>What is your budget? ($)</p>
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control input-box" id="budget" name="budget"
-                                    placeholder="1000" required>
-                                <label for="budget">Budget</label>
+
+                <form class="form_info d-flex flex-column align-items-center justify-content-center" method="post"
+                    action="/conversation">
+
+                    <div class="page active row h-100 w-100 mt-5 pt-5">
+                        <div class="d-none d-md-block col"></div>
+                        <div class="col col-md-6 col-lg-5 col-xl-4 col-xxl-3">
+                            <div class="page-form p-4 rounded-3 shadow-sm">
+                                <div class="input-field">
+                                    <p>What is your budget? ($)</p>
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control input-box" id="budget" name="budget"
+                                            placeholder="1000" required>
+                                        <label for="budget">Budget</label>
+                                    </div>
+                                </div>
+
+                                <div class="range-field">
+                                    <p>How long are you planning to stay?</p>
+                                    <label for="length-of-stay" class="form-label stay-days">3 days</label>
+                                    <input type="range" class="form-range" min="1" max="30" id="length_of_stay"
+                                        name="length_of_stay" value="3"
+                                        oninput="document.querySelector('.stay-days').innerHTML = this.value + ' days'">
+                                </div>
+
+                                <div class="input-field">
+                                    <p>What country you want to visit?</p>
+                                    <div class="border rounded dropdown w-100">
+                                        <input class="form-control country_input" type="hidden" name="country"
+                                            value="any">
+                                        <button class="btn dropdown-btn dropdown-toggle w-100 text-start country_btn"
+                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Anywhere
+                                        </button>
+                                        <ul class="dropdown-menu country-dropdown">
+                                            <li>
+                                                <input class="form-control country" type="text"
+                                                    onkeyup="filterCountry()">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="btns d-flex justify-content-center mt-3 gap-2">
+                                    <button class="next-button btn w-50" type="button">Next</button>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="btns d-flex justify-content-center mt-3 gap-2">
-                            <button class="next-button btn w-50" type="button">Next</button>
-                        </div>
+                        <div class="d-none d-md-block col"></div>
                     </div>
 
-                    <div class="page p-4 rounded-3 shadow-sm">
-                        <div class="input-field">
-                            <p>How are you going to travel?</p>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control input-box" id="travel_style" name="travel_style"
-                                    placeholder="natural" required>
-                                <label for="travel-style">Travel Style</label>
+                    <div class="page row h-100 w-100 mt-2">
+                        <div class="d-none d-md-block col"></div>
+                        <div class="col col-md-10 col-lg-9 col-xl-8 col-xxl-7">
+                            <div class="page-form p-4 rounded-3 shadow-sm">
+                                <div class="input-field">
+                                    <p>How would you like to travel?</p>
+                                    <input class="form-control travel_styles input-box" type="hidden"
+                                        name="travel_styles">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Backpacking"
+                                            id="backpacking" onchange="inputRadio('travel_styles', this);">
+                                        <label class="form-check-label" for="backpacking">
+                                            <h5>Backpacking</h5>
+                                            <p>Budget-friendly and adventurous travel style where travelers explore
+                                                destinations with minimal luggage, often using public transportation and
+                                                staying in hostels. It's about embracing spontaneity, immersing oneself
+                                                in local cultures, and seeking outdoor adventures.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Explorational"
+                                            id="explorational" onchange="inputRadio('travel_styles', this);">
+                                        <label class="form-check-label" for="explorational">
+                                            <h5>Explorational</h5>
+                                            <p>
+                                                All about adventure and discovery, where travelers seek out new
+                                                experiences and off-the-beaten-path destinations. Whether it's hiking
+                                                through remote landscapes, embarking on wildlife safaris, or exploring
+                                                hidden gems, explorational travel is about embracing the unknown and
+                                                expanding horizons.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Relaxational"
+                                            id="relaxational" onchange="inputRadio('travel_styles', this);">
+                                        <label class="form-check-label" for="relaxational">
+                                            <h5>Relaxational</h5>
+                                            <p>
+                                                Focuses on unwinding and rejuvenating, often in tranquil settings like
+                                                beaches, spas, or wellness retreats. It's about taking a break from the
+                                                hustle and bustle of everyday life and prioritizing rest and relaxation.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Cultural" id="cultural"
+                                            onchange="inputRadio('travel_styles', this);">
+                                        <label class="form-check-label" for="cultural">
+                                            <h5>Cultural</h5>
+                                            <p>
+                                                Involves immersing oneself in the traditions, history, and everyday life
+                                                of a destination. Travelers often visit museums, historical sites,
+                                                attend local festivals, and engage with the local community to gain a
+                                                deeper understanding of the culture they're exploring.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Culinary" id="culinary"
+                                            onchange="inputRadio('travel_styles', this);">
+                                        <label class="form-check-label" for="culinary">
+                                            <h5>Culinary</h5>
+                                            <p>
+                                                Revolves around experiencing the diverse flavors and cuisines of
+                                                different regions. Travelers often explore local markets, try authentic
+                                                dishes, participate in cooking classes, and engage in food-related
+                                                cultural experiences to immerse themselves in the culinary traditions of
+                                                the destination.
+                                            </p>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="btns d-flex justify-content-center mt-3 gap-2">
+                                    <button class="back-button btn btn-secondary w-25" type="button">Back</button>
+                                    <button class="next-button btn w-25" type="button">Next</button>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="btns d-flex justify-content-center mt-3 gap-2">
-                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
-                            <button class="next-button btn w-50" type="button">Next</button>
-                        </div>
+                        <div class="d-none d-md-block col"></div>
                     </div>
 
-                    <div class="page p-4 rounded-3 shadow-sm">
-                        <div class="input-field">
-                            <p>Define your accommodation standard:</p>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control input-box" id="accommodation_standard"
-                                    name="accommodation_standard" placeholder="high" required>
-                                <label for="accommodation-standard">Accommodation Standard</label>
+                    <div class="page row h-100 w-100 mt-2">
+                        <div class="d-none d-md-block col"></div>
+                        <div class="col col-md-10 col-lg-9 col-xl-8 col-xxl-7">
+                            <div class="page-form p-4 rounded-3 shadow-sm">
+                                <div class="input-field">
+                                    <p>How do you like your destinations?</p>
+                                    <input class="form-control locales input-box" type="hidden" name="locales">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Beaches" id="beaches"
+                                            onchange="inputRadio('locales', this);">
+                                        <label class="form-check-label" for="beaches">
+                                            <h5>Beaches</h5>
+                                            <p>Sun, sand, and relaxation, making them perfect destinations for those
+                                                seeking a tranquil escape. With picturesque coastlines, clear waters,
+                                                and a variety of water sports and activities, beach locales provide the
+                                                ultimate seaside getaway.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Mountains" id="mountains"
+                                            onchange="inputRadio('locales', this);">
+                                        <label class="form-check-label" for="mountains">
+                                            <h5>Mountains</h5>
+                                            <p>Breathtaking vistas, fresh air, and thrilling adventures for outdoor
+                                                enthusiasts. Whether it's hiking, skiing, or simply enjoying the serene
+                                                beauty of the landscape, mountain locales provide a peaceful retreat for
+                                                nature lovers and adventure seekers alike.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Cultural Sites"
+                                            id="cultural-sites" onchange="inputRadio('locales', this);">
+                                        <label class="form-check-label" for="cultural-sites">
+                                            <h5>Cultural Sites</h5>
+                                            <p>Rich in history, heritage, and significance, offering travelers a glimpse
+                                                into the past and the heart of a destination. From ancient ruins and
+                                                historical landmarks to art galleries and museums, cultural sites
+                                                provide valuable insights into the traditions and identity of a region.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Urban Areas"
+                                            id="urban-areas" onchange="inputRadio('locales', this);">
+                                        <label class="form-check-label" for="urban-areas">
+                                            <h5>Urban Areas</h5>
+                                            <p>Bustling hubs of culture, entertainment, and excitement, offering a
+                                                diverse range of experiences for travelers. From iconic landmarks and
+                                                vibrant nightlife to world-class dining and shopping, urban locales
+                                                provide endless opportunities for exploration and discovery.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Rural Areas"
+                                            id="rural-areas" onchange="inputRadio('locales', this);">
+                                        <label class="form-check-label" for="rural-areas">
+                                            <h5>Rural Areas</h5>
+                                            <p>Peaceful retreat from the hustle and bustle of city life, with
+                                                picturesque landscapes and a slower pace of living. Travelers can
+                                                immerse themselves in nature, experience local traditions, and enjoy
+                                                authentic cultural experiences away from the crowds.</p>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="btns d-flex justify-content-center mt-3 gap-2">
+                                    <button class="back-button btn btn-secondary w-25" type="button">Back</button>
+                                    <button class="next-button btn w-25" type="button">Next</button>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="btns d-flex justify-content-center mt-3 gap-2">
-                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
-                            <button class="next-button btn w-50" type="button">Next</button>
-                        </div>
+                        <div class="d-none d-md-block col"></div>
                     </div>
 
-                    <div class="page p-4 rounded-3 shadow-sm">
-                        <div class="range-field">
-                            <p>How long are you planning to stay?</p>
-                            <label for="length-of-stay" class="form-label stay-days">3 days</label>
-                            <input type="range" class="form-range input-box" min="1" max="30" id="length_of_stay"
-                                name="length_of_stay" value="3"
-                                oninput="document.querySelector('.stay-days').innerHTML = this.value + ' days'">
-                        </div>
+                    <div class="page row h-100 w-100 mt-2">
+                        <div class="d-none d-md-block col"></div>
+                        <div class="col col-md-10 col-lg-9 col-xl-8 col-xxl-7">
+                            <div class="page-form p-4 rounded-3 shadow-sm">
+                                <div class="input-field">
+                                    <p>Which activities do you enjoy?</p>
+                                    <input class="form-control activities input-box" type="hidden" name="activities">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Trekking" id="trekking"
+                                            onchange="inputRadio('activities', this);">
+                                        <label class="form-check-label" for="trekking">
+                                            <h5>Trekking</h5>
+                                            <p>Adventurous outdoor activity that allows travelers to explore remote and
+                                                scenic landscapes on foot. Whether it's hiking through rugged mountains,
+                                                dense forests, or picturesque trails, trekking offers a unique
+                                                opportunity to connect with nature and experience breathtaking views
+                                                along the way.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Water Sports"
+                                            id="water-sports" onchange="inputRadio('activities', this);">
+                                        <label class="form-check-label" for="water-sports">
+                                            <h5>Water Sports</h5>
+                                            <p>Thrilling adventures and fun-filled experiences for travelers who love
+                                                the ocean or lakes. Whether it's surfing, snorkeling, diving, or
+                                                kayaking, water sports provide an exciting way to explore the natural
+                                                beauty of coastal destinations and waterways.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Adrenaline Sports"
+                                            id="adrenaline-sports" onchange="inputRadio('activities', this);">
+                                        <label class="form-check-label" for="adrenaline-sports">
+                                            <h5>Adrenaline Sports</h5>
+                                            <p>Perfect for thrill-seekers looking for an extra rush during their
+                                                travels. Whether it's bungee jumping, skydiving, rock climbing, or
+                                                white-water rafting, these high-energy activities offer an unforgettable
+                                                way to experience the excitement and beauty of a destination.</p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="Shopping" id="shopping"
+                                            onchange="inputRadio('activities', this);">
+                                        <label class="form-check-label" for="shopping">
+                                            <h5>Shopping</h5>
+                                            <p>
+                                                Explore local markets, boutiques, and artisan shops, providing a unique
+                                                way to experience the culture and style of a destination. From bustling
+                                                street markets to upscale shopping districts, shopping is an enjoyable
+                                                activity that offers the opportunity to find one-of-a-kind souvenirs and
+                                                treasures to take home.
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                            value="Experiencing Cultural and Local Life" id="ex-cul-local"
+                                            onchange="inputRadio('activities', this);">
+                                        <label class="form-check-label" for="ex-cul-local">
+                                            <h5>Experiencing Cultural and Local Life</h5>
+                                            <p>Immerses travelers in the heart and soul of a locale, providing
+                                                authentic insights into its traditions, customs, and way of life.
+                                                Whether in local festivals, historical landmarks, or interacting with
+                                                the community, enriching experience and forge meaningful connections and
+                                                lasting memories.</p>
+                                        </label>
+                                    </div>
+                                </div>
 
-                        <div class="btns d-flex justify-content-center mt-3 gap-2">
-                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
-                            <button class="next-button btn w-50" type="button">Next</button>
-                        </div>
-                    </div>
-
-                    <div class="page p-4 rounded-3 shadow-sm">
-                        <div class="input-field">
-                            <p>What country you want to visit?</p>
-                            <div class="border rounded dropdown w-100">
-                                <input class="form-control country_input input-box" type="hidden" name="country"
-                                    value="any">
-                                <button class="btn dropdown-btn dropdown-toggle w-100 text-start country_btn"
-                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Anywhere
-                                </button>
-                                <ul class="dropdown-menu country-dropdown">
-                                    <li>
-                                        <input class="form-control country" type="text" onkeyup="filterCountry()">
-                                    </li>
-                                </ul>
+                                <div class="btns d-flex justify-content-center mt-3 gap-2">
+                                    <button class="back-button btn btn-secondary w-25" type="button">Back</button>
+                                    <button class="next-button btn w-25" type="button">Next</button>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="btns d-flex justify-content-center mt-3 gap-2">
-                            <button class="back-button btn btn-secondary w-50" type="button">Back</button>
-                            <button class="next-button btn w-50" type="button">Submit</button>
-                        </div>
+                        <div class="d-none d-md-block col"></div>
                     </div>
 
-                    <div class="page p-4 rounded-3 shadow-sm">
-                        <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
-                            <h4>Planning your trip</h4>
-                            <p><i>Just a moment...</i></p>
-                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                    <div class="page row h-100 w-100 mt-2">
+                        <div class="d-none d-md-block col"></div>
+                        <div class="col col-md-10 col-lg-9 col-xl-8 col-xxl-7">
+                            <div class="page-form p-4 rounded-3 shadow-sm">
+                                <div class="input-field">
+                                    <div class="input-field">
+                                        <p>Choose your accommodation standard:</p>
+                                        <input class="form-control accommodation_standard input-box" type="hidden"
+                                            name="accommodation_standard">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Hostel" id="hostel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="hostel">
+                                                <h5>Hostel</h5>
+                                                <p>Budget-friendly accommodation with shared dormitories and communal
+                                                    spaces, perfect for travelers looking to meet new people and explore
+                                                    new destinations affordably.</p>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1-star Hotel"
+                                                id="1-star-hotel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="1-star-hotel">
+                                                <h5>1-star Hotel</h5>
+                                                <p>
+                                                    Provides basic, budget-friendly accommodation with essential
+                                                    amenities. Ideal for budget-conscious travelers seeking a simple and
+                                                    affordable place to stay.
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="2-star Hotel"
+                                                id="2-star-hotel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="2-star-hotel">
+                                                <h5>2-star Hotel</h5>
+                                                <p>
+                                                    Modest accommodation with slightly more amenities than a 1-star
+                                                    hotel. While still budget-friendly, provide a comfortable and
+                                                    convenient stay for travelers looking for affordable options.
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="3-star Hotel"
+                                                id="3-star-hotel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="3-star-hotel">
+                                                <h5>3-star Hotel</h5>
+                                                <p>
+                                                    Comfortable accommodation with additional amenities and services.
+                                                    Ideal for travelers looking for a balance between comfort and
+                                                    affordability, provide a pleasant stay with various amenities.
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="4-star Hotel"
+                                                id="4-star-hotel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="4-star-hotel">
+                                                <h5>4-star Hotel</h5>
+                                                <p>
+                                                    Upscale accommodation with luxurious amenities and exceptional
+                                                    service. Ideal for travelers seeking comfort and style, provide
+                                                    spacious rooms, high-quality dining options, and often additional
+                                                    services such as spa treatments or concierge service.
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="5-star Hotel"
+                                                id="5-star-hotel"
+                                                onchange="inputRadio('accommodation_standard', this);">
+                                            <label class="form-check-label" for="5-star-hotel">
+                                                <h5>5-star Hotel</h5>
+                                                <p>
+                                                    Luxurious accommodation with world-class amenities and impeccable
+                                                    service. Ideal for travelers seeking the highest level of comfort
+                                                    and sophistication, provide spacious and elegantly appointed rooms,
+                                                    gourmet dining options, state-of-the-art facilities, and
+                                                    personalized services such as butler and concierge service.
+                                                </p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btns d-flex justify-content-center mt-3 gap-2">
+                                    <button class="back-button btn btn-secondary w-25" type="button">Back</button>
+                                    <button class="next-button btn w-25" type="button">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none d-md-block col"></div>
+                    </div>
+
+                    <div class="page mt-5 pt-5">
+                        <div class="page-form p-4 rounded-3 shadow-sm h-100 w-100 mt-5">
+                            <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                                <h4>Planning your trip</h4>
+                                <p><i>Just a moment...</i></p>
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </form>
+
             </div>
         </section>
     </main>

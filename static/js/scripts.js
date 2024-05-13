@@ -1,76 +1,3 @@
-window.onload = function () {
-    if (window.location.href.includes('form')) {
-        // list countries
-        var countryDropdown = document.querySelector(".country-dropdown")
-
-        fetch('/get_countries', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                countries = data
-                for (var country in countries) {
-                    var li = document.createElement("li")
-                    var a = document.createElement("a")
-                    a.classList.add("dropdown-item")
-                    a.href = "#"
-                    a.onclick = (function (country) {
-                        return function () {
-                            chooseCountry(country, countries[country])
-                        }
-                    })(country)
-                    a.textContent = countries[country]
-                    li.appendChild(a)
-                    countryDropdown.appendChild(li)
-                }
-            })
-
-        // pagination
-        var pages = Array.from(document.querySelectorAll('.page'))
-        var breadcrumbs = Array.from(document.querySelectorAll('.breadcrumbs-item'))
-        var currentIndex = 0
-
-        pages[currentIndex].classList.add('active')
-
-        var nextButtons = Array.from(document.querySelectorAll('.next-button'))
-        nextButtons.forEach(function (button, index) {
-            button.addEventListener('click', function () {
-                if (pages[currentIndex].querySelector('.input-box').value === '') {
-                    customAlert('Please fill in the required fields', 'alert-warning')
-                }
-                else {
-                    pages[currentIndex].classList.remove('active')
-                    breadcrumbs[currentIndex].classList.remove('is-active')
-                    currentIndex++
-                    if (currentIndex === 5) {
-                        pages[currentIndex].classList.add('active')
-                        setTimeout(function () {
-                            document.querySelector('.form_info').submit()
-                        }, 1000)
-                    } else {
-                        pages[currentIndex].classList.add('active')
-                        breadcrumbs[currentIndex].classList.add('is-active')
-                    }
-                }
-            })
-        })
-
-        var backButtons = Array.from(document.querySelectorAll('.back-button'))
-        backButtons.forEach(function (button, index) {
-            button.addEventListener('click', function () {
-                pages[currentIndex].classList.remove('active')
-                breadcrumbs[currentIndex].classList.remove('is-active')
-                currentIndex--
-                pages[currentIndex].classList.add('active')
-                breadcrumbs[currentIndex].classList.add('is-active')
-            })
-        })
-    }
-}
-
 function chooseCountry(country, name) {
     document.querySelector(".country_btn").innerHTML = name
     document.querySelector(".country_input").value = name
@@ -117,9 +44,9 @@ function customAlert(message, type) {
     }, 5000)
 }
 
-function sendPrompt(chat_id) {
+function sendPrompt(chatId) {
     var userInput = document.getElementById('user-input').value
-    var idInt = parseInt(chat_id)
+    var idInt = parseInt(chatId)
 
     var userHtml = "<br><p><img src='/static/images/avatar.png' class='img-fluid' alt='avatar' width='30px' heigh='30px'>&nbsp;<strong>You</strong></p><p>" + userInput + "</p>"
     document.getElementById('chat-messages').innerHTML += userHtml
@@ -151,4 +78,95 @@ function sendPrompt(chat_id) {
         })
 
     document.getElementById('user-input').value = ''
+}
+
+function inputRadio(inputbox, checkbox) {
+    var input = document.querySelector('.' + inputbox)
+    var inputList = input.value.split(", ")
+    if (inputList.length === 1 && inputList[0] === "") {
+        inputList = []
+    }
+
+    if (checkbox.checked) {
+        inputList.push(checkbox.value)
+    } else {
+        inputList = inputList.filter(function (el) {
+            return el !== checkbox.value
+        })
+    }
+
+    input.value = inputList.join(", ");
+}
+
+window.onload = function () {
+    if (window.location.href.includes('form')) {
+        // list countries
+        var countryDropdown = document.querySelector(".country-dropdown")
+
+        fetch('/get_countries', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                countries = data
+                for (var country in countries) {
+                    var li = document.createElement("li")
+                    var a = document.createElement("a")
+                    a.classList.add("dropdown-item")
+                    a.href = "#"
+                    a.onclick = (function (country) {
+                        return function () {
+                            chooseCountry(country, countries[country])
+                        }
+                    })(country)
+                    a.textContent = countries[country]
+                    li.appendChild(a)
+                    countryDropdown.appendChild(li)
+                }
+            })
+
+        // pagination
+        var pages = Array.from(document.querySelectorAll('.page'))
+        var breadcrumbs = Array.from(document.querySelectorAll('.breadcrumbs-item'))
+        var currentIndex = 0
+
+        pages[currentIndex].classList.add('active')
+
+        var nextButtons = Array.from(document.querySelectorAll('.next-button'))
+        nextButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                if (pages[currentIndex].querySelector('.input-box').value === '') {
+                    customAlert('Please fill in the required fields', 'alert-warning')
+                }
+                else {
+                    pages[currentIndex].classList.remove('active')
+                    breadcrumbs[currentIndex].classList.remove('is-active')
+                    currentIndex++
+                    if (currentIndex === 5) {
+                        pages[currentIndex].classList.add('active')
+                        setTimeout(function () {
+                            document.querySelector('.form_info').submit()
+                        }, 1000)
+                    } else {
+                        pages[currentIndex].classList.add('active')
+                        breadcrumbs[currentIndex].classList.add('is-active')
+                    }
+                }
+            })
+        })
+
+        var backButtons = Array.from(document.querySelectorAll('.back-button'))
+        backButtons.forEach(function (button, index) {
+            button.addEventListener('click', function () {
+                pages[currentIndex].classList.remove('active')
+                breadcrumbs[currentIndex].classList.remove('is-active')
+                currentIndex--
+                pages[currentIndex].classList.add('active')
+                breadcrumbs[currentIndex].classList.add('is-active')
+            })
+        })
+    }
 }
