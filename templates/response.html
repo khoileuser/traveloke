@@ -16,29 +16,47 @@
 <body>
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
             <a href="/" class="logo d-flex align-items-center me-auto">
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">Traveloke</h1>
             </a>
-
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/" class="">Home</a></li>
                 </ul>
             </nav>
-
             <a class="btn-getstarted" href="/form">Get Started</a>
-
         </div>
     </header>
 
-    <main class="pt-5">
-        <section class="d-flex align-items-center justify-content-center pt-5">
-            <div class="container d-flex flex-column align-items-center justify-content-center">
-                <h2 class="mt-2">Travel Plan</h2>
-                <div class="response p-4 mt-2 rounded-3 mb-4"></div>
+    <main class="pt-5 pb-5">
+        <section class="pt-5 pb-5">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="d-none d-md-block col"></div>
+                    <div class="col col-md-10 col-lg-8 col-xl-7 rounded-3" style="background-color: #f9f9f9;">
+                        <div id="chat-messages" class="p-5"></div>
+                    </div>
+                    <div class="d-none d-md-block col"></div>
+                </div>
             </div>
+
+            <div class="container-fluid fixed-bottom" style="background-color: var(--background-color);">
+                <div class="row h-100">
+                    <div class="d-none d-md-block col"></div>
+                    <div class="col col-md-9 col-lg-7 col-xl-5 h-100">
+                        <div class="input-group h-100 mb-4 mt-4">
+                            <input type="text" id="user-input" class="form-control"
+                                placeholder="Type your message here...">
+                            <button id="send-button" class="btn btn-primary" type="button"
+                                onclick="sendPrompt('{{ chat_id }}')">Send</button>
+                        </div>
+                    </div>
+                    <div class="d-none d-md-block col"></div>
+                </div>
+            </div>
+
         </section>
     </main>
 
@@ -46,12 +64,14 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="{{ url_for('static', path='/js/scripts.js') }}"></script>
 
     <script>
         var converter = new showdown.Converter()
         text = `{{ response }}`
         html = converter.makeHtml(text)
-        document.querySelector('.response').innerHTML = html
+        var responseHtml = "<p><img src={{ url_for('static', path='/images/avatar.png') }} class='img-fluid' alt='avatar' width='30px' heigh='30px'>&nbsp;<strong>Traveloke</strong></p>" + html
+        document.getElementById('chat-messages').innerHTML += responseHtml
     </script>
 
 </body>
