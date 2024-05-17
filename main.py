@@ -42,7 +42,6 @@ def parse_prompt(budget, length_of_stay, country, travel_styles, locales, activi
     else:
         prompt += f"My ideal accommodation is {accommodation_standard}."
 
-    print(prompt)
     return prompt
 
 
@@ -80,7 +79,7 @@ class Item(BaseModel):
     prompt: str
 
 
-@ app.post("/chat")
+@app.post("/chat")
 def read_chat(request: Request, item: Item):
     chat = chats[item.chat_id]
     response = chat.send_message(item.prompt)
